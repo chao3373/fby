@@ -169,7 +169,7 @@ public class IndexServiceImpl implements IndexService {
                     "b.LianXiFF as phone,\n" +
                     "b.XingBie as sex,\n" +
                     "b.ZhuZhi as address,\n" +
-                    "b.ChuShengNY as birthdate,\n" +
+                    "convert(varchar(10), b.ChuShengNY, 120) as  birthdate,\n" +
                     "c.ShenFenZH as idCardNo,\n" +
                     "a.CardNo as medicalCardNumber\n" +
                     "From Card_MasterInfo a,PA_PatientInfo b,PA_PatientInfoExt c\n" +
@@ -1157,7 +1157,7 @@ public class IndexServiceImpl implements IndexService {
                 "b.DanWei as bzdw,\n" +
                 "b.JiLiangDW as jldw\n" +
                 "From Dr_StoreByBatch a,vDM_DS_List b,Dict_Depart c\n" +
-                "where a.KeShiBM=c.KeShiBM \n" +
+                "where a.KeShiBM=c.KeShiBM and c.YuanQu=1\n" +
                 "and a.YaoPinID=b.YaoPinID\n" +
                 "and a.ZhangMianShu>0\n" +
                 "group by b.YaoMing,b.GuiGe,b.JiLiangDW,b.DanWei";
@@ -1204,7 +1204,7 @@ public class IndexServiceImpl implements IndexService {
                 "FeiYongNo as chargeCode,\n" +
                 "FeiYongMC as chargeName\n" +
                 "From Dict_HosCharge where \n" +
-                "HeSuanBM='23' \n" +
+                "HeSuanBM='34' and YiYuanSF <>9999\n" +
                 "and ZhuXiaoBZ=0";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -1249,7 +1249,7 @@ public class IndexServiceImpl implements IndexService {
                 "max(FeiYongNo) as chargeCode,\n" +
                 "FeiYongMC as chargeName\n" +
                 " From Dict_HosCharge where \n" +
-                "HeSuanBM<>'23' \n" +
+                "HeSuanBM<>'34' and YiYuanSF <>9999\n" +
                 "and ZhuXiaoBZ=0\n" +
                 "group by FeiYongMC";
         try {
@@ -1296,7 +1296,7 @@ public class IndexServiceImpl implements IndexService {
                 "a.ShouJia as chargePrice,\n" +
                 "b.YaoMing as chargeName\n" +
                 "From Dr_StoreByBatch a,vDM_DS_List b,Dict_Depart c\n" +
-                "where a.KeShiBM=c.KeShiBM\n" +
+                "where a.KeShiBM=c.KeShiBM and c.YuanQu=1\n" +
                 "and a.YaoPinID=b.YaoPinID\n" +
                 "and a.ZhangMianShu>0\n" +
                 "group by b.YaoPinID,b.YaoMing,a.ShouJia\n" +
@@ -1306,7 +1306,7 @@ public class IndexServiceImpl implements IndexService {
                 "yiyuansf as chargePrice,\n" +
                 "FeiYongMC as chargeName\n" +
                 "From Dict_HosCharge where \n" +
-                "HeSuanBM='23' \n" +
+                "HeSuanBM='34' and YiYuanSF <>9999\n" +
                 "and ZhuXiaoBZ=0\n" +
                 "union all\n" +
                 "select \n" +
@@ -1314,7 +1314,7 @@ public class IndexServiceImpl implements IndexService {
                 "yiyuansf as chargePrice,\n" +
                 "FeiYongMC as chargeName\n" +
                 " From Dict_HosCharge where \n" +
-                "HeSuanBM<>'23' \n" +
+                "HeSuanBM<>'34' and YiYuanSF <>9999\n" +
                 "and ZhuXiaoBZ=0";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -1489,14 +1489,8 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    /***
-     * 数据统计
-     * @param stringg
-     * @return
-     */
     @Override
     public Map<String, Object> tongji(List<String> stringg) {
-        Map<String, Object> map = new HashMap<>();
         return null;
     }
 

@@ -22,6 +22,7 @@ public class CardRecharge {
     @Column(length = 100)
     private String payType;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date payTime;
 
     @Override
