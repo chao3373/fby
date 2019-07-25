@@ -34,6 +34,7 @@ public class GetRequestBodyUtil {
     }
 
     public static List<String> getStringg(HttpServletRequest request, List<String> strs) {
+        System.out.println(strs);
         StringBuilder sb = new StringBuilder();
         List<String> strings = new ArrayList<>();
         try {

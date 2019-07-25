@@ -8,7 +8,6 @@ import com.shenke.repository.ChargesRepository;
 import com.shenke.repository.HuanZheRepository;
 import com.shenke.service.IndexService;
 import com.shenke.util.GetRequestBodyUtil;
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -68,7 +67,10 @@ public class IndexController {
      */
     @RequestMapping("/selectByMedicalCardNumber")
     public Map<String, Object> selectByMedicalCardNumber(HttpServletRequest request) {
-        return indexService.selectByMedicalCardNumber(GetRequestBodyUtil.getString(request, "medicalCardNumber"));
+        List<String> strings = new ArrayList<>();
+        strings.add("medicalCardNumber");
+        List<String> stringg = GetRequestBodyUtil.getStringg(request, strings);
+        return indexService.selectByMedicalCardNumber(stringg.get(0));
     }
 
     /***
@@ -327,7 +329,8 @@ public class IndexController {
         List<String> stringg = GetRequestBodyUtil.getStringg(request, list);
         System.out.println("================stringg===============");
         System.out.println(stringg);
-        String charges = list.get(list.size() - 1);
+        String charges = stringg.get(stringg.size() - 1);
+        System.out.println(charges);
         System.out.println("================charges===============");
         JSONArray array = JSONUtil.parseArray(charges);
 
@@ -412,5 +415,32 @@ public class IndexController {
         list.add("endTime");
         List<String> stringg = GetRequestBodyUtil.getStringg(request, list);
         return indexService.tongji(stringg);
+    }
+
+    /***
+     * 退费
+     * @param request
+     * @return
+     */
+    @RequestMapping("/tuiFei")
+    public Map<String, Object> tuiFei(HttpServletRequest request){
+        List<String> list = new ArrayList<>();
+        list.add("medicalCardNumber");
+        list.add("outTradeNo");
+        List<String> stringg = GetRequestBodyUtil.getStringg(request, list);
+        return indexService.tuiFei(stringg);
+    }
+
+    /***
+     *查询住院费用明细
+     * @param request
+     * @return
+     */
+    @RequestMapping("/queryHospitalizationDetail")
+    public Map<String, Object> queryHospitalizationDetail(HttpServletRequest request){
+        List<String> list = new ArrayList<>();
+        list.add("id");
+        List<String> stringg = GetRequestBodyUtil.getStringg(request, list);
+        return indexService.queryHospitalizationDetail(stringg);
     }
 }

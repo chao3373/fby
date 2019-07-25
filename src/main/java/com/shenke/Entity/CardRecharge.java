@@ -1,7 +1,7 @@
 package com.shenke.Entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "t_cardRecharge")
@@ -10,7 +10,7 @@ public class CardRecharge {
     @GeneratedValue
     private Long id;
 
-    @Column(length = 100)
+    @Column(length = 150)
     private String medicalCardNumber;
 
     @Column(length = 100)
@@ -22,7 +22,6 @@ public class CardRecharge {
     @Column(length = 100)
     private String payType;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date payTime;
 
     @Override

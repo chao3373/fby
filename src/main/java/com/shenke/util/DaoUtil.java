@@ -1,5 +1,7 @@
 package com.shenke.util;
 
+import org.springframework.util.StringUtils;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +15,7 @@ import java.util.Map;
  */
 public class DaoUtil {
     static final String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    static final String dbURL = "jdbc:sqlserver://10.10.10.1:1433;DatabaseName=zyyhis";
+    static final String dbURL = "jdbc:sqlserver://10.10.10.1:1433;DatabaseName=his";
     static final String Name = "sa";
     static final String Pwd = "abc-123";
 
@@ -38,7 +40,13 @@ public class DaoUtil {
                 Map<String, Object> map1 = new HashMap<>();
                 ResultSetMetaData metaData = resultSet.getMetaData();
                 for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-                    map1.put(metaData.getColumnName(i), resultSet.getString(i));
+                    System.out.println("===========");
+                    System.out.println(metaData.getColumnName(i) + ":" + resultSet.getString(i));
+                    if (StringUtils.isEmpty(resultSet.getString(i))){
+                        map1.put(metaData.getColumnName(i).trim(), "");
+                    } else {
+                        map1.put(metaData.getColumnName(i).trim(), resultSet.getString(i).trim());
+                    }
                 }
                 list.add(map1);
             }
@@ -63,7 +71,7 @@ public class DaoUtil {
                 Map<String, Object> map1 = new HashMap<>();
                 ResultSetMetaData metaData = resultSet.getMetaData();
                 for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-                    map1.put(metaData.getColumnName(i), resultSet.getString(i));
+                    map1.put(metaData.getColumnName(i).trim(), resultSet.getString(i).trim());
                     list.add(map1);
                 }
             }

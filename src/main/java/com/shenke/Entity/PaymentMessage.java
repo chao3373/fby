@@ -1,7 +1,7 @@
 package com.shenke.Entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "t_paymentMessage")
@@ -10,7 +10,7 @@ public class PaymentMessage {
     @GeneratedValue
     private Long id;
 
-    @Column(length = 100)
+    @Column(length = 150)
     private String medicalCardNumber;//就诊卡号
 
     @Column(length = 100)
@@ -22,14 +22,38 @@ public class PaymentMessage {
     @Column(nullable = true)
     private Double amount; //金额
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date payTime;//支付时间
 
     @Column(length = 100)
     private String detailId;//代缴费明细中的id
 
+    @Column(length = 100)
+    private String outPayId;//
+
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentMessage{" +
+                "id=" + id +
+                ", medicalCardNumber='" + medicalCardNumber + '\'' +
+                ", outTradeNo='" + outTradeNo + '\'' +
+                ", payType='" + payType + '\'' +
+                ", amount=" + amount +
+                ", payTime=" + payTime +
+                ", detailId='" + detailId + '\'' +
+                ", outPayId='" + outPayId + '\'' +
+                '}';
+    }
+
+    public String getOutPayId() {
+        return outPayId;
+    }
+
+    public void setOutPayId(String outPayId) {
+        this.outPayId = outPayId;
     }
 
     public void setId(Long id) {
@@ -54,19 +78,6 @@ public class PaymentMessage {
 
     public Double getAmount() {
         return amount;
-    }
-
-    @Override
-    public String toString() {
-        return "PaymentMessage{" +
-                "id=" + id +
-                ", medicalCardNumber='" + medicalCardNumber + '\'' +
-                ", outTradeNo='" + outTradeNo + '\'' +
-                ", payType='" + payType + '\'' +
-                ", amount=" + amount +
-                ", payTime=" + payTime +
-                ", detailId='" + detailId + '\'' +
-                '}';
     }
 
     public String getPayType() {

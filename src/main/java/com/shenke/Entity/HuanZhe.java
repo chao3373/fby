@@ -45,7 +45,7 @@ public class HuanZhe {
     @Column(length = 100)
     private String billDocCode;
 
-    @Column(length = 100)
+    @Column(length = 150)
     private String medicalCardNumber;
 
     @Column(length = 100)
